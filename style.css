@@ -1,0 +1,48 @@
+/* Center setup screen */
+.center-screen {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card for name setup */
+.card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  width: 300px;
+}
+
+/* Top bar */
+.top-bar {
+  background: #1e293b;
+  padding: 10px;
+  text-align: right;
+  font-weight: bold;
+}
+
+/* Chat container */
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.nameInput {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.setNameButton {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.title {
+  color: white;
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Message App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- NAME SETUP SCREEN -->
+    <div id="setupScreen" class="center-screen">
+      <div class="card">
+        <h2 class="title">Create your profile</h2>
+        <input id="nameInput" class="nameInput" placeholder="Enter your name" />
+        <button class="setNameButton" onclick="setName()">Continue</button>
+      </div>
+    </div>
+
+    <!-- CHAT SCREEN -->
+    <div id="chatScreen" style="display: none">
+      <div class="top-bar">
+        <span id="userName"></span>
+      </div>
+
+      <div class="container">
+        <ul id="list"></ul>
+
+        <div class="input-area">
+          <input id="text" placeholder="Write message..." />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const api = "http://localhost:5138";
+
+      // Check if user exists
+      async function checkUser() {
+        const res = await fetch(api + "/me");
+
+        if (res.status === 404) {
+          document.getElementById("setupScreen").style.display = "flex";
+        } else {
+          const user = await res.json();
+          startChat(user.name);
+        }
+      }
+
+      // Set name
+      async function setName() {
+        const name = document.getElementById("nameInput").value;
+
+        const res = await fetch(api + "/set-name", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name }),
+        });
+
+        if (!res.ok) {
+          const msg = await res.text();
+          return alert(msg);
+        }
+
+        startChat(name);
+      }
+
+      // Start chat UI
+      function startChat(name) {
+        document.getElementById("setupScreen").style.display = "none";
+        document.getElementById("chatScreen").style.display = "block";
+
+        document.getElementById("userName").innerText = "👤 " + name;
+
+        loadMessages();
+        setInterval(loadMessages, 5000);
+      }
+
+      // Send message
+      async function sendMessage() {
+        const text = document.getElementById("text").value;
+
+        const res = await fetch(api + "/messages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+
+        if (!res.ok) {
+          const msg = await res.text();
+          return alert(msg);
+        }
+
+        document.getElementById("text").value = "";
+        loadMessages();
+      }
+
+      // Load messages
+      async function loadMessages() {
+        const res = await fetch(api + "/messages");
+        const messages = await res.json();
+
+        const list = document.getElementById("list");
+
+        list.innerHTML = messages
+          .map((m) => {
+            const time = new Date(m.createdAt).toLocaleString();
+            return `
+        <li class="message">
+            <div class="msg-header">
+                <span>${m.name}</span>
+                <span>${time}</span>
+            </div>
+            <div>${m.text}</div>
+        </li>`;
+          })
+          .join("");
+
+        list.scrollTop = list.scrollHeight;
+      }
+
+      checkUser();
+    </script>
+  </body>
+</html>
