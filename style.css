@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Center setup screen */
 .center-screen {
   display: none;
@@ -45,4 +51,45 @@
 
 .title {
   color: white;
+}
+
+.sendButton {
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  border: 2px solid #1e293b;
+}
+
+.textInput {
+  border-radius: 8px;
+  padding: 8px;
+  padding-right: 50%;
+  border: 2px solid #1e293b;
+}
+
+#userName {
+  color: white;
+}
+
+ul {
+  list-style: none;
+}
+
+.message-text {
+  font-size: 24px;
+  background-color: #1e293b0f;
+  border-radius: 8px;
+  padding: 5px;
+  width: auto;
+  margin-bottom: 8px;
+}
+
+.message-name {
+  color: #1e293b;
+  font-weight: bold;
+}
+
+.message-time {
+  font-style: italic;
+  font-size: 12px;
 }

@@ -24,8 +24,8 @@
         <ul id="list"></ul>
 
         <div class="input-area">
-          <input id="text" placeholder="Write message..." />
-          <button onclick="sendMessage()">Send</button>
+          <input id="text" placeholder="Write message..." class="textInput" />
+          <button onclick="sendMessage()" class="sendButton">Send</button>
         </div>
       </div>
     </div>
@@ -106,10 +106,10 @@
             return `
         <li class="message">
             <div class="msg-header">
-                <span>${m.name}</span>
-                <span>${time}</span>
+                <span class="message-name">${m.name}</span>
+                <span class="message-time">${time}</span>
             </div>
-            <div>${m.text}</div>
+            <div class="message-text">${m.text}</div>
         </li>`;
           })
           .join("");
