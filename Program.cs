@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // DB connection
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql("Host=localhost;Database=messages_db;Username=postgres;Password=shotabakurius"));
+    options.UseNpgsql(
+    Environment.GetEnvironmentVariable("DATABASE_URL") ?? "fallback_connection_string"
+));
 
 // CORS
 builder.Services.AddCors(options =>
